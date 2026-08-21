@@ -1,13 +1,18 @@
 ### Signing in
 
-Sign in as **admin** with the password shown in your app's Terminal on first start, or create an
-administrator yourself:
+An administrator is created for you on first run. Open a **Terminal** for this app (the `>_` button)
+and read the password:
 
 ```
-semaphore user add --admin --login you --name "Your Name" \
-  --email you@example.com --password '<a strong password>' \
-  --config /run/semaphore/config.json
+cat /app/data/.initial-admin
 ```
+
+Sign in as `admin`, **change that password**, then promote your own account from **Team → Users**.
+
+Accounts that sign in through Cloudron single sign-on arrive as *external* users and are never
+administrators, so the `admin` account above is the way in the first time. Note also that this
+application's "disable password login" setting only hides the password form — the login endpoint
+keeps working — so treat the `admin` password as live and change it.
 
 ### The one thing to know about backups
 

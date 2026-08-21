@@ -1,3 +1,8 @@
+[1.0.8]
+* Create an administrator on first run and write the credential to /app/data/.initial-admin.
+  Single sign-on users arrive as external non-administrators and upstream forbids non-admins from
+  creating projects, so a fresh install previously had no usable account at all.
+
 [1.0.7]
 * Cap concurrent task execution at 10. Upstream defaults to 9999, which makes the memory limit
   unenforceable in principle since every task forks its own Ansible process.

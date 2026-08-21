@@ -155,4 +155,29 @@ EOF
 chown cloudron:cloudron /run/semaphore/config.json
 chmod 600 /run/semaphore/config.json
 
+# First-run administrator. Without this the application has no usable account at all: a user who
+# signs in with Cloudron single sign-on arrives EXTERNAL and is never an administrator, and
+# `non_admin_can_create_project` defaults to false upstream -- so the first person to sign in cannot
+# create a project, cannot administer anything, and has no way forward from the interface. Creating
+# one here also runs the database migrations before the server starts.
+#
+# The credential is written once to a file the operator can read from the app's Terminal, and the
+# file is the marker: if it exists, this has already run.
+ADMIN_FILE=/app/data/.initial-admin
+if [ ! -f "$ADMIN_FILE" ]; then
+    ADMIN_PW="$(head -c 24 /dev/urandom | base64 | tr -d '/+=' | cut -c1-20)"
+    if gosu cloudron /app/code/bin/semaphore user add --admin \
+         --login admin --name "Administrator" --email admin@localhost \
+         --password "$ADMIN_PW" --config /run/semaphore/config.json >/dev/null 2>&1; then
+        { echo "username: admin"
+          echo "password: ${ADMIN_PW}"
+          echo
+          echo "Created automatically on first run. Sign in, change this password, then promote"
+          echo "your own single sign-on account to administrator from Team -> Users."
+        } > "$ADMIN_FILE"
+        chown cloudron:cloudron "$ADMIN_FILE"
+        chmod 600 "$ADMIN_FILE"
+    fi
+fi
+
 exec gosu cloudron:cloudron /app/code/bin/semaphore server --config /run/semaphore/config.json

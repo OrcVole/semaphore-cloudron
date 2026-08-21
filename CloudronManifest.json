@@ -7,7 +7,7 @@
   "description": "file://DESCRIPTION.md",
   "changelog": "file://CHANGELOG.md",
   "icon": "file://logo.png",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "upstreamVersion": "2.19.8",
   "healthCheckPath": "/api/ping",
   "httpPort": 3000,
@@ -28,7 +28,7 @@
     "playbooks",
     "infrastructure"
   ],
-  "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:c300ed19019f733525c1553153138f50fa38d3d5c488372d279517732388182a",
+  "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:ae5592265aacaafba44e1a5fbcb1c90a1acb23decfefef4be731f4a87da9edac",
   "minBoxVersion": "9.1.0",
   "website": "https://semaphoreui.com",
   "documentationUrl": "https://docs.semaphoreui.com",
@@ -38,5 +38,13 @@
   "iconUrl": "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png",
   "mediaLinks": [
     "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png"
-  ]
+  ],
+  "checklist": {
+    "admin": {
+      "message": "Get the first administrator password: open a Terminal for this app (the `>_` button) and run `cat /app/data/.initial-admin`. Sign in as `admin`, change the password, then promote your own Cloudron account to administrator from Team -> Users."
+    },
+    "sso": {
+      "message": "Accounts that sign in through Cloudron arrive as external users and are never administrators. Promote them from Team -> Users after signing in as `admin`."
+    }
+  }
 }
