@@ -7,7 +7,7 @@
   "description": "file://DESCRIPTION.md",
   "changelog": "file://CHANGELOG.md",
   "icon": "file://logo.png",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "upstreamVersion": "2.19.8",
   "healthCheckPath": "/api/ping",
   "httpPort": 3000,
@@ -38,13 +38,5 @@
   "iconUrl": "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png",
   "mediaLinks": [
     "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png"
-  ],
-  "checklist": {
-    "admin": {
-      "message": "Get the first administrator password: open a Terminal for this app (the `>_` button) and run `cat /app/data/.initial-admin`. Sign in as `admin`, change the password, then promote your own Cloudron account to administrator from Team -> Users."
-    },
-    "sso": {
-      "message": "Accounts that sign in through Cloudron arrive as external users and are never administrators. Promote them from Team -> Users after signing in as `admin`."
-    }
-  }
+  ]
 }

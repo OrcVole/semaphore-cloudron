@@ -1,3 +1,8 @@
+[1.0.9]
+* Remove the post-install checklist. Both entries were standing advice rather than one-time
+  actions, so they showed as permanently outstanding on a correctly configured install. The same
+  guidance is in the post-install message, which is where advice belongs.
+
 [1.0.8]
 * Create an administrator on first run and write the credential to /app/data/.initial-admin.
   Single sign-on users arrive as external non-administrators and upstream forbids non-admins from
