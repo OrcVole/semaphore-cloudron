@@ -1,8 +1,52 @@
 {
-    "1.0.7": {
-        "sourceArchiveUrl": "https://github.com/OrcVole/semaphore-cloudron/archive/refs/tags/v1.0.7.tar.gz",
-        "sourceArchiveSha256": "",
-        "changelog": "* First release, packaging Semaphore UI 2.19.8.",
-        "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:c300ed19019f733525c1553153138f50fa38d3d5c488372d279517732388182a"
+    "stable": "1.0.7",
+    "versions": {
+        "1.0.7": {
+            "manifest": {
+                "id": "io.github.orcvole.semaphore",
+                "manifestVersion": 2,
+                "title": "Semaphore UI",
+                "author": "OrcVole",
+                "tagline": "Web interface for running Ansible playbooks, inventories and schedules",
+                "description": "Semaphore UI is a web interface for Ansible. It gives playbooks, inventories, repositories and\nschedules a browser front end, so routine automation can be run and reviewed by people who are not\nsitting at a terminal.\n\nIt is **not** Semaphore CI \u2014 the name is shared by an unrelated continuous-integration product.\n\n* Run Ansible playbooks from a browser, with live output and a full task history\n* Keep inventories, repositories and environments as first-class, versioned objects\n* Store SSH keys, passwords and API tokens encrypted at rest\n* Schedule recurring runs, and trigger them over a webhook or the REST interface\n* Give each project its own members and permissions\n\nThis package stores credentials under an encryption keyring that it generates itself on first run,\nand never ships a fixed key.",
+                "changelog": "[1.0.7]\n* Cap concurrent task execution at 10. Upstream defaults to 9999, which makes the memory limit\n  unenforceable in principle since every task forks its own Ansible process.\n\n[1.0.6]\n* Ship /etc/ansible/ansible.cfg. Task execution uses a sanitised environment, so the temporary\n  paths must come from package-owned config rather than exported variables.\n\n[1.0.5]\n* Set the Ansible target-side temporary path. Without it every module transfer failed against\n  the read-only home, so any playbook gathering facts or running a real module was unreachable.\n\n[1.0.4]\n* Take ownership of the whole data volume at startup. A platform restore returns it with a\n  foreign uid, which made every existing project repository unusable (git dubious ownership).\n\n[1.0.3]\n* Create $HOME/.ssh with mode 700 so outbound SSH to managed hosts can write known_hosts.\n\n[1.0.0]\n* First release, packaging Semaphore UI 2.19.8.\n* PostgreSQL for storage; the database is provisioned by the platform.\n* The encryption keyring is generated on first run at /app/data/keys and is never overwritten.\n* Session secrets are generated once and persisted, so restarts do not sign users out.",
+                "icon": "file://logo.png",
+                "version": "1.0.7",
+                "upstreamVersion": "2.19.8",
+                "healthCheckPath": "/api/ping",
+                "httpPort": 3000,
+                "addons": {
+                    "localstorage": {},
+                    "postgresql": {},
+                    "oidc": {
+                        "loginRedirectUri": "/api/auth/oidc/cloudron/redirect"
+                    }
+                },
+                "optionalSso": true,
+                "memoryLimit": 1073741824,
+                "postInstallMessage": "### Signing in\n\nSign in as **admin** with the password shown in your app's Terminal on first start, or create an\nadministrator yourself:\n\n```\nsemaphore user add --admin --login you --name \"Your Name\" \\\n  --email you@example.com --password '<a strong password>' \\\n  --config /run/semaphore/config.json\n```\n\n### The one thing to know about backups\n\nYour credentials \u2014 SSH keys, passwords, API tokens \u2014 are encrypted with a keyring this app generated\nfor itself at **`/app/data/keys/keyring.yml`**. It is included in Cloudron's backups.\n\n**If that file is ever lost, every stored credential becomes permanently unreadable**, and the app\nwill not tell you. It keeps running, the credential list still loads, and the failure only appears\nwhen something tries to *use* a key. After any restore, confirm the keyring survived:\n\n```\nsemaphore vaults check --config /run/semaphore/config.json\n```\n\nEvery key must report `active`. A key reported as `MISSING KEY (cannot decrypt)` means the rows it\nprotects can no longer be read.\n\n### Running playbooks\n\nAnsible and git are installed in the container. Add a repository under a project, then a playbook\ntask template against it. Outbound SSH to your managed hosts uses the keys you store here.",
+                "tags": [
+                    "ansible",
+                    "automation",
+                    "devops",
+                    "playbooks",
+                    "infrastructure"
+                ],
+                "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:c300ed19019f733525c1553153138f50fa38d3d5c488372d279517732388182a",
+                "minBoxVersion": "9.1.0",
+                "website": "https://semaphoreui.com",
+                "documentationUrl": "https://docs.semaphoreui.com",
+                "packagerName": "OrcVole",
+                "packagerUrl": "https://github.com/OrcVole/semaphore-cloudron",
+                "contactEmail": "Most+github@OrcadianVole.com",
+                "iconUrl": "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png",
+                "mediaLinks": [
+                    "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png"
+                ]
+            },
+            "creationDate": "Fri, 21 Aug 2026 16:05:00 GMT",
+            "ts": 1787328300000,
+            "publishState": "published"
+        }
     }
 }
