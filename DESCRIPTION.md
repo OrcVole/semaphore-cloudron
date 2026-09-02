@@ -1,3 +1,5 @@
+`<upstream>2.19.12</upstream>
+
 Semaphore UI is a web interface for Ansible. It gives playbooks, inventories, repositories and
 schedules a browser front end, so routine automation can be run and reviewed by people who are not
 sitting at a terminal.

@@ -1,3 +1,10 @@
+[1.0.10]
+
+- Update Semaphore UI 2.19.8 -> 2.19.12
+- Upstream: database schema migration present in this release range; existing installs must run schema changes
+- Upstream: routine features and fixes across three release chunks
+- No packaging changes: auth topology, workspace layout and secrets handling unchanged; base and built images digest-pinned
+
 [1.0.9]
 
 - Remove the post-install checklist. Both entries were standing advice rather than one-time
