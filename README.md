@@ -22,7 +22,9 @@ clear, and the shipped compose file carries a publicly-known literal key.
 install that looks entirely healthy — the interface still lists credentials and returns 200 — while
 every stored secret is undecryptable. Confirm it survived with:
 
-    semaphore vaults check --config /run/semaphore/config.json
+```text
+semaphore vaults check --config /run/semaphore/config.json
+```
 
 Each key must report `active`, not `MISSING KEY`.
 

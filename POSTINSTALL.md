@@ -3,7 +3,7 @@
 An administrator is created for you on first run. Open a **Terminal** for this app (the `>_` button)
 and read the password:
 
-```
+```bash
 cat /app/data/.initial-admin
 ```
 
@@ -23,7 +23,7 @@ for itself at **`/app/data/keys/keyring.yml`**. It is included in Cloudron's bac
 will not tell you. It keeps running, the credential list still loads, and the failure only appears
 when something tries to *use* a key. After any restore, confirm the keyring survived:
 
-```
+```text
 semaphore vaults check --config /run/semaphore/config.json
 ```
 

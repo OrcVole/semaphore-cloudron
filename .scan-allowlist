@@ -1,0 +1,5 @@
+# Fixed strings secret-scan may ignore. Each line is a REVIEWABLE CLAIM that the string is public by
+# design, never a way to quieten a real leak. Only ever list something already published on purpose.
+#
+# The declared Cloudron contactEmail. Every manifest must carry one and it is public by definition.
+Most+github@OrcadianVole.com

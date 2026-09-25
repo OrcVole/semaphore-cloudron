@@ -1,3 +1,28 @@
 *.tar
 *.tar.gz
 .DS_Store
+
+# Maintainer-private anonymity list (used by test/secret-scan.sh), never published.
+.anonymize-list
+
+# Local working notes, never tracked in the public package.
+phase-notes/
+*foundation*.md
+*field-guide*.md
+
+# Secrets and local credentials.
+.env
+.env.*
+*token*.txt
+*.token
+.secrets/
+*.key
+.cloudron.json
+
+# Editor and harness local state.
+.claude/
+
+# Local build, test and scratch artefacts.
+*.log
+scratchpad/
+tmp/
