@@ -196,6 +196,53 @@
             "creationDate": "Wed, 02 Sep 2026 21:10:59 GMT",
             "ts": 1788383459000,
             "publishState": "published"
+        },
+        "1.0.11": {
+            "manifest": {
+                "id": "io.github.orcvole.semaphore",
+                "manifestVersion": 2,
+                "title": "Semaphore UI",
+                "author": "OrcVole",
+                "tagline": "Web interface for running Ansible playbooks, inventories and schedules",
+                "description": "<upstream>2.19.16</upstream>\n\nSemaphore UI is a web interface for Ansible. It gives playbooks, inventories, repositories and\nschedules a browser front end, so routine automation can be run and reviewed by people who are not\nsitting at a terminal.\n\nIt is **not** Semaphore CI — the name is shared by an unrelated continuous-integration product.\n\n- Run Ansible playbooks from a browser, with live output and a full task history\n- Keep inventories, repositories and environments as first-class, versioned objects\n- Store SSH keys, passwords and API tokens encrypted at rest\n- Schedule recurring runs, and trigger them over a webhook or the REST interface\n- Give each project its own members and permissions\n\nThis package stores credentials under an encryption keyring that it generates itself on first run,\nand never ships a fixed key.",
+                "changelog": "- Base image cloudron/base 5.0.0 to 6.0.0 (Ubuntu 26.04, glibc 2.43). The Semaphore binary is built\n  static (CGO disabled), so it does not depend on the base's glibc. Ansible and git now come from the\n  26.04 archive.\n- **Check your playbooks before updating: Ansible moves from ansible-core 2.16 to 2.20** (Ansible 9.2\n  to 13.1), four core releases at once, with the Ubuntu move. The changes most likely to break an\n  existing playbook:\n  - managed hosts need Python 3.9 or newer (2.16 accepted 2.7 and 3.6 and up);\n  - since 2.19 a `when:` or other conditional that does not evaluate to true or false is an error, not\n    a warning (`allow_broken_conditionals = True` under `[defaults]` in `/etc/ansible/ansible.cfg`\n    turns it back into a warning while you fix them), and only strings from trusted sources are rendered as templates;\n  - `async_status` results: use the `started` and `finished` tests, not the properties as booleans.\n  Upstream's porting guides for ansible-core 2.17, 2.18, 2.19 and 2.20 list everything. If a playbook\n  must stay on 2.16, do not take this update until it is ported.\n- git 2.43 to 2.53.\n- Update Semaphore UI 2.19.12 -> 2.19.16. The only release notes published for the range cover\n  2.19.16: a configurable runner check interval (`check_interval_seconds`), affecting `semaphore\n  runner start` only, with no database migration and no server or web interface change. This package\n  runs the server, so the option is not used here.\n- Fix: the description's `<upstream>` tag no longer starts with a stray backtick.\n",
+                "icon": "file://logo.png",
+                "version": "1.0.11",
+                "upstreamVersion": "2.19.16",
+                "healthCheckPath": "/api/ping",
+                "httpPort": 3000,
+                "addons": {
+                    "localstorage": {},
+                    "postgresql": {},
+                    "oidc": {
+                        "loginRedirectUri": "/api/auth/oidc/cloudron/redirect"
+                    }
+                },
+                "optionalSso": true,
+                "memoryLimit": 1073741824,
+                "postInstallMessage": "### Signing in\n\nAn administrator is created for you on first run. Open a **Terminal** for this app (the `>_` button)\nand read the password:\n\n```bash\ncat /app/data/.initial-admin\n```\n\nSign in as `admin`, **change that password**, then promote your own account from **Team → Users**.\n\nAccounts that sign in through Cloudron single sign-on arrive as *external* users and are never\nadministrators, so the `admin` account above is the way in the first time. Note also that this\napplication's \"disable password login\" setting only hides the password form — the login endpoint\nkeeps working — so treat the `admin` password as live and change it.\n\n### The one thing to know about backups\n\nYour credentials — SSH keys, passwords, API tokens — are encrypted with a keyring this app generated\nfor itself at **`/app/data/keys/keyring.yml`**. It is included in Cloudron's backups.\n\n**If that file is ever lost, every stored credential becomes permanently unreadable**, and the app\nwill not tell you. It keeps running, the credential list still loads, and the failure only appears\nwhen something tries to *use* a key. After any restore, confirm the keyring survived:\n\n```text\nsemaphore vaults check --config /run/semaphore/config.json\n```\n\nEvery key must report `active`. A key reported as `MISSING KEY (cannot decrypt)` means the rows it\nprotects can no longer be read.\n\n### Running playbooks\n\nAnsible and git are installed in the container. Add a repository under a project, then a playbook\ntask template against it. Outbound SSH to your managed hosts uses the keys you store here.\n",
+                "tags": [
+                    "ansible",
+                    "automation",
+                    "devops",
+                    "playbooks",
+                    "infrastructure"
+                ],
+                "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:b15848341b44c48f1dfb5b8e05b8bbd1eeb0c38db4e52c6fcbc7dbecc7275d11",
+                "minBoxVersion": "9.1.0",
+                "website": "https://semaphoreui.com",
+                "documentationUrl": "https://docs.semaphoreui.com",
+                "packagerName": "OrcVole",
+                "packagerUrl": "https://github.com/OrcVole/semaphore-cloudron",
+                "contactEmail": "Most+github@OrcadianVole.com",
+                "iconUrl": "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png",
+                "mediaLinks": [
+                    "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png"
+                ]
+            },
+            "creationDate": "Fri, 16 Oct 2026 16:08:02 GMT",
+            "ts": 1792166882000,
+            "publishState": "published"
         }
     }
 }

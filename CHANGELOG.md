@@ -1,3 +1,25 @@
+[1.0.11]
+
+- Base image cloudron/base 5.0.0 to 6.0.0 (Ubuntu 26.04, glibc 2.43). The Semaphore binary is built
+  static (CGO disabled), so it does not depend on the base's glibc. Ansible and git now come from the
+  26.04 archive.
+- **Check your playbooks before updating: Ansible moves from ansible-core 2.16 to 2.20** (Ansible 9.2
+  to 13.1), four core releases at once, with the Ubuntu move. The changes most likely to break an
+  existing playbook:
+  - managed hosts need Python 3.9 or newer (2.16 accepted 2.7 and 3.6 and up);
+  - since 2.19 a `when:` or other conditional that does not evaluate to true or false is an error, not
+    a warning (`allow_broken_conditionals = True` under `[defaults]` in `/etc/ansible/ansible.cfg`
+    turns it back into a warning while you fix them), and only strings from trusted sources are rendered as templates;
+  - `async_status` results: use the `started` and `finished` tests, not the properties as booleans.
+  Upstream's porting guides for ansible-core 2.17, 2.18, 2.19 and 2.20 list everything. If a playbook
+  must stay on 2.16, do not take this update until it is ported.
+- git 2.43 to 2.53.
+- Update Semaphore UI 2.19.12 -> 2.19.16. The only release notes published for the range cover
+  2.19.16: a configurable runner check interval (`check_interval_seconds`), affecting `semaphore
+  runner start` only, with no database migration and no server or web interface change. This package
+  runs the server, so the option is not used here.
+- Fix: the description's `<upstream>` tag no longer starts with a stray backtick.
+
 [1.0.10]
 
 - Update Semaphore UI 2.19.8 -> 2.19.12

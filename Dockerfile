@@ -1,6 +1,6 @@
-ARG SEMAPHORE_VERSION=v2.19.12
+ARG SEMAPHORE_VERSION=v2.19.16
 
-FROM golang:1.26.4 AS builder
+FROM docker.io/golang:1.26.4@sha256:f96cc555eb8db430159a3aa6797cd5bae561945b7b0fe7d0e284c63a3b291609 AS builder
 
 # A pre-FROM ARG is a global argument and is NOT in scope inside a build stage; it has to be
 # re-declared here to be visible. Without this the clone below runs with an empty --branch and fails.
@@ -24,7 +24,8 @@ RUN CGO_ENABLED=0 go build -o ./bin/semaphore -tags "netgo" \
     -ldflags "-s -w -X github.com/semaphoreui/semaphore/util.Ver=${SEMAPHORE_VERSION#v} -X github.com/semaphoreui/semaphore/util.Commit=$(git log --pretty=format:'%h' -n 1) -X github.com/semaphoreui/semaphore/util.Date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
     ./cli
 
-FROM cloudron/base:5.0.0
+# Tag 6.0.0 resolves to this digest (Ubuntu 26.04, glibc 2.43).
+FROM docker.io/cloudron/base:6.0.0@sha256:9bed4c8fa880645f8e669041ee28febe941481d00e9445e3e5a5483cb541d09b
 
 RUN apt-get update && apt-get install -y --no-install-recommends ansible git && \
     rm -rf /var/lib/apt/lists/*

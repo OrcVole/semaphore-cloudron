@@ -7,7 +7,7 @@ running Ansible playbooks, inventories and schedules. **Not Semaphore CI**; the 
 |---|---|
 | Upstream | `semaphoreui/semaphore` `v2.19.8` (commit `3449a04`) |
 | Package version | 1.0.0 |
-| Base image | `cloudron/base:5.0.0` |
+| Base image | `cloudron/base:6.0.0` (Ubuntu 26.04) |
 | Addons | `postgresql`, `localstorage` |
 | Health check | `GET /api/ping` → `200 pong` |
 
@@ -37,6 +37,10 @@ Things that are not obvious and cost time to find:
   breaks module transfer; a playbook using only `debug` will not reveal it.
 - Task execution uses a **sanitised environment**, so Ansible configuration must live in
   `/etc/ansible/ansible.cfg` rather than in exported variables.
+- **Ansible comes from the base's Ubuntu archive, so a base move can carry an Ansible major.** Package
+  1.0.11 (base 6, Ubuntu 26.04) moved ansible-core from 2.16 to 2.20: managed hosts need Python 3.9 or
+  newer, and since 2.19 a non-boolean conditional is an error. The 1.0.11 CHANGELOG entry lists what
+  to check in existing playbooks before updating.
 - A platform **restore returns `/app/data` owned by a foreign uid**, so `start.sh` chowns the whole
   volume on every start. Without that, git refuses every existing project repository.
 - The PostgreSQL port belongs **inside** `SEMAPHORE_DB_HOST` as `host:port`; there is no separate
