@@ -7,7 +7,7 @@ running Ansible playbooks, inventories and schedules. **Not Semaphore CI**; the 
 |---|---|
 | Upstream | `semaphoreui/semaphore` `v2.19.8` (commit `3449a04`) |
 | Package version | 1.0.0 |
-| Base image | `cloudron/base:6.0.0` (Ubuntu 26.04) |
+| Base image | `cloudron/base:6.0.1` (Ubuntu 26.04) |
 | Addons | `postgresql`, `localstorage` |
 | Health check | `GET /api/ping` → `200 pong` |
 

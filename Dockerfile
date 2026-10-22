@@ -1,4 +1,4 @@
-ARG SEMAPHORE_VERSION=v2.19.16
+ARG SEMAPHORE_VERSION=v2.19.17
 
 FROM docker.io/golang:1.26.4@sha256:f96cc555eb8db430159a3aa6797cd5bae561945b7b0fe7d0e284c63a3b291609 AS builder
 
@@ -24,8 +24,8 @@ RUN CGO_ENABLED=0 go build -o ./bin/semaphore -tags "netgo" \
     -ldflags "-s -w -X github.com/semaphoreui/semaphore/util.Ver=${SEMAPHORE_VERSION#v} -X github.com/semaphoreui/semaphore/util.Commit=$(git log --pretty=format:'%h' -n 1) -X github.com/semaphoreui/semaphore/util.Date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
     ./cli
 
-# Tag 6.0.0 resolves to this digest (Ubuntu 26.04, glibc 2.43).
-FROM docker.io/cloudron/base:6.0.0@sha256:9bed4c8fa880645f8e669041ee28febe941481d00e9445e3e5a5483cb541d09b
+# Tag 6.0.1 resolves to this digest (Ubuntu 26.04, glibc 2.43).
+FROM docker.io/cloudron/base:6.0.1@sha256:7b1e729960c3ca312d26e886917ba89483241bba0219ff292858e10d9d5768ee
 
 RUN apt-get update && apt-get install -y --no-install-recommends ansible git && \
     rm -rf /var/lib/apt/lists/*

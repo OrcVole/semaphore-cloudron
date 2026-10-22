@@ -243,6 +243,53 @@
             "creationDate": "Fri, 16 Oct 2026 16:08:02 GMT",
             "ts": 1792166882000,
             "publishState": "published"
+        },
+        "1.0.12": {
+            "manifest": {
+                "id": "io.github.orcvole.semaphore",
+                "manifestVersion": 2,
+                "title": "Semaphore UI",
+                "author": "OrcVole",
+                "tagline": "Web interface for running Ansible playbooks, inventories and schedules",
+                "description": "<upstream>2.19.17</upstream>\n\nSemaphore UI is a web interface for Ansible. It gives playbooks, inventories, repositories and\nschedules a browser front end, so routine automation can be run and reviewed by people who are not\nsitting at a terminal.\n\nIt is **not** Semaphore CI — the name is shared by an unrelated continuous-integration product.\n\n- Run Ansible playbooks from a browser, with live output and a full task history\n- Keep inventories, repositories and environments as first-class, versioned objects\n- Store SSH keys, passwords and API tokens encrypted at rest\n- Schedule recurring runs, and trigger them over a webhook or the REST interface\n- Give each project its own members and permissions\n\nThis package stores credentials under an encryption keyring that it generates itself on first run,\nand never ships a fixed key.",
+                "changelog": "- Base image cloudron/base 6.0.0 to 6.0.1: Ubuntu security updates, including the removal of the compromised eMudhra emSign ECC Root CA - G3 from the trusted certificates.\n- Update Semaphore UI 2.19.16 -> 2.19.17. The release adds a configurable job-polling check interval for the runner; it affects `semaphore runner start` only, so this package, which runs the server, is not affected.\n",
+                "icon": "file://logo.png",
+                "version": "1.0.12",
+                "upstreamVersion": "2.19.17",
+                "healthCheckPath": "/api/ping",
+                "httpPort": 3000,
+                "addons": {
+                    "localstorage": {},
+                    "postgresql": {},
+                    "oidc": {
+                        "loginRedirectUri": "/api/auth/oidc/cloudron/redirect"
+                    }
+                },
+                "optionalSso": true,
+                "memoryLimit": 1073741824,
+                "postInstallMessage": "### Signing in\n\nAn administrator is created for you on first run. Open a **Terminal** for this app (the `>_` button)\nand read the password:\n\n```bash\ncat /app/data/.initial-admin\n```\n\nSign in as `admin`, **change that password**, then promote your own account from **Team → Users**.\n\nAccounts that sign in through Cloudron single sign-on arrive as *external* users and are never\nadministrators, so the `admin` account above is the way in the first time. Note also that this\napplication's \"disable password login\" setting only hides the password form — the login endpoint\nkeeps working — so treat the `admin` password as live and change it.\n\n### The one thing to know about backups\n\nYour credentials — SSH keys, passwords, API tokens — are encrypted with a keyring this app generated\nfor itself at **`/app/data/keys/keyring.yml`**. It is included in Cloudron's backups.\n\n**If that file is ever lost, every stored credential becomes permanently unreadable**, and the app\nwill not tell you. It keeps running, the credential list still loads, and the failure only appears\nwhen something tries to *use* a key. After any restore, confirm the keyring survived:\n\n```text\nsemaphore vaults check --config /run/semaphore/config.json\n```\n\nEvery key must report `active`. A key reported as `MISSING KEY (cannot decrypt)` means the rows it\nprotects can no longer be read.\n\n### Running playbooks\n\nAnsible and git are installed in the container. Add a repository under a project, then a playbook\ntask template against it. Outbound SSH to your managed hosts uses the keys you store here.\n",
+                "tags": [
+                    "ansible",
+                    "automation",
+                    "devops",
+                    "playbooks",
+                    "infrastructure"
+                ],
+                "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:4d99e37c97f84f211626468185cfd49c427c41c03bdaba550aeb8fbfbf3abd81",
+                "minBoxVersion": "9.1.0",
+                "website": "https://semaphoreui.com",
+                "documentationUrl": "https://docs.semaphoreui.com",
+                "packagerName": "OrcVole",
+                "packagerUrl": "https://github.com/OrcVole/semaphore-cloudron",
+                "contactEmail": "Most+github@OrcadianVole.com",
+                "iconUrl": "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png",
+                "mediaLinks": [
+                    "https://raw.githubusercontent.com/OrcVole/semaphore-cloudron/main/logo.png"
+                ]
+            },
+            "creationDate": "Thu, 22 Oct 2026 17:33:44 GMT",
+            "ts": 1792690424000,
+            "publishState": "published"
         }
     }
 }

@@ -7,8 +7,8 @@
   "description": "file://DESCRIPTION.md",
   "changelog": "file://CHANGELOG.md",
   "icon": "file://logo.png",
-  "version": "1.0.11",
-  "upstreamVersion": "2.19.16",
+  "version": "1.0.12",
+  "upstreamVersion": "2.19.17",
   "healthCheckPath": "/api/ping",
   "httpPort": 3000,
   "addons": {
@@ -28,7 +28,7 @@
     "playbooks",
     "infrastructure"
   ],
-  "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:b15848341b44c48f1dfb5b8e05b8bbd1eeb0c38db4e52c6fcbc7dbecc7275d11",
+  "dockerImage": "ghcr.io/orcvole/semaphore-cloudron@sha256:4d99e37c97f84f211626468185cfd49c427c41c03bdaba550aeb8fbfbf3abd81",
   "minBoxVersion": "9.1.0",
   "website": "https://semaphoreui.com",
   "documentationUrl": "https://docs.semaphoreui.com",

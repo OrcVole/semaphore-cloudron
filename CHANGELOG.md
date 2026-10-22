@@ -1,3 +1,8 @@
+[1.0.12]
+
+- Base image cloudron/base 6.0.0 to 6.0.1: Ubuntu security updates, including the removal of the compromised eMudhra emSign ECC Root CA - G3 from the trusted certificates.
+- Update Semaphore UI 2.19.16 -> 2.19.17. The release adds a configurable job-polling check interval for the runner; it affects `semaphore runner start` only, so this package, which runs the server, is not affected.
+
 [1.0.11]
 
 - Base image cloudron/base 5.0.0 to 6.0.0 (Ubuntu 26.04, glibc 2.43). The Semaphore binary is built
